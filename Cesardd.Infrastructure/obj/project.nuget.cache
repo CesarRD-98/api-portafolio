@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "BQMitMrW1vk=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Cesar Reyes\\Desktop\\Proyectos\\api-portafolio\\Cesardd.Infrastructure\\Cesardd.Infrastructure.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Cesar Reyes\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.6\\microsoft.extensions.dependencyinjection.abstractions.10.0.6.nupkg.sha512"
+  ],
+  "logs": []
+}

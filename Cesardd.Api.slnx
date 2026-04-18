@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Cesardd.Api/Cesardd.Api.csproj" />
+  <Project Path="Cesardd.Core/Cesardd.Core.csproj" Id="a1c564b8-63c6-4ae9-9761-de6f4c4bb300" />
+  <Project Path="Cesardd.Infrastructure/Cesardd.Infrastructure.csproj" Id="e6fb28fa-1ecf-445f-86c1-9c0ab4b790c6" />
+  <Project Path="Cesardd.Shared/Cesardd.Shared.csproj" Id="854f01f7-3a04-4b6e-a746-72fc11974280" />
+</Solution>

@@ -1,0 +1,16 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "Cesardd.Api | v1",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:58858/"
+    },
+    {
+      "url": "https://localhost:44341/"
+    }
+  ],
+  "paths": { }
+}
