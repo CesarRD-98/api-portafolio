@@ -4,7 +4,6 @@ using Cesardd.Core;
 using Cesardd.Infrastructure;
 using Cesardd.Shared.Results;
 using Microsoft.AspNetCore.RateLimiting;
-using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,17 +35,10 @@ builder.Services.AddRateLimiter(options =>
     options.OnRejected = async (context, token) =>
     {
         context.HttpContext.Response.StatusCode = 429;
-        context.HttpContext.Response.ContentType = "application/json";
 
         var response = ApiResponse<object>.Fail("Demasiadas solicitudes, intenta más tarde");
 
-        await context.HttpContext.Response.WriteAsync(
-            JsonSerializer.Serialize(response, new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            }),
-            token
-        );
+        await context.HttpContext.Response.WriteAsJsonAsync(response, token);
     };
 
     options.AddFixedWindowLimiter("ContactPolicy", opt =>
