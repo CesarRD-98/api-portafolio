@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cesardd.Core.Interfaces
+﻿namespace Cesardd.Core.Interfaces
 {
-    internal interface IEmailService
+    public interface IEmailService
     {
+        Task SendEmailContactAsync(string name, string email, string message);
     }
 }

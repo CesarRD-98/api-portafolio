@@ -23,4 +23,9 @@
             return new(false, default, error);
         }
     }
+
+    public class ApiError
+    {
+        public string Message { get; set; } = default!;
+    }
 }

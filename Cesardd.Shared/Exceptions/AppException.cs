@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cesardd.Shared.Exceptions
+﻿namespace Cesardd.Shared.Exceptions
 {
     public class AppException : Exception
     {

@@ -4,16 +4,16 @@
     {
         public bool Success { get; set; }
         public T? Data { get; set; }
-        public string? Message { get; set; }
+        public ApiError? Error { get; set; }
 
-        public static ApiResponse<T> Ok(T data, string? message = null)
+        public static ApiResponse<T> Ok(T data)
         {
-            return new() { Success = true, Data = data, Message = message };
+            return new() { Success = true, Data = data, Error = null };
         }
 
         public static ApiResponse<T> Fail(string message)
         {
-            return new() { Success = false, Message = message };
+            return new() { Success = false, Error = new ApiError { Message = message } };
         }
     }
 }

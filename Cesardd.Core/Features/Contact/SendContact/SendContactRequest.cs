@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cesardd.Core.Features.Contact.SendContact
+﻿namespace Cesardd.Core.Features.Contact.SendContact
 {
-    internal class SendContactRequest
+    public class SendContactRequest
     {
+        public string Name { get; set; } = default!;
+        public string Email { get; set; } = default!;
+        public string Message { get; set; } = default!;
     }
 }

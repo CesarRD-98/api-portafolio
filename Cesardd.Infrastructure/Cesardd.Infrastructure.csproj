@@ -1,18 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.6" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.6" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.6" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="10.0.6" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="10.0.6" />
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.6" />
+		<PackageReference Include="Resend" Version="0.4.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Cesardd.Core\Cesardd.Core.csproj" />
-    <ProjectReference Include="..\Cesardd.Shared\Cesardd.Shared.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Cesardd.Core\Cesardd.Core.csproj" />
+		<ProjectReference Include="..\Cesardd.Shared\Cesardd.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="Email\Templates\*.html">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
 </Project>

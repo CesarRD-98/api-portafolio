@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Cesardd.Core.Features.Contact.SendContact;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cesardd.Core
 {
@@ -6,6 +7,8 @@ namespace Cesardd.Core
     {
         public static IServiceCollection AddCore(this IServiceCollection services)
         {
+            services.AddScoped<SendContactHandler>();
+
             return services;
         }
     }
