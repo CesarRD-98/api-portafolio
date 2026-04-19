@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.RateLimiting;
 namespace Cesardd.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [EnableRateLimiting("ContactPolicy")]
     public class ContactController(SendContactHandler handler) : ControllerBase
     {

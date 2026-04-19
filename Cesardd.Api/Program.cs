@@ -22,7 +22,8 @@ builder.Services.AddCors(options =>
         policy
             .WithOrigins(
                 "https://www.cesardd.com",
-                "http://localhost:3000"
+                "http://localhost:3000",
+                "https://api.cesardd.com"
             )
             .AllowAnyHeader()
             .AllowAnyMethod();
