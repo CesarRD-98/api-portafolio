@@ -1,46 +1,75 @@
 ﻿using Cesardd.Core.Interfaces;
 using Cesardd.Infrastructure.Email.Renderes;
+using Cesardd.Shared.Exceptions;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Resend;
 
 namespace Cesardd.Infrastructure.Email
 {
     public class ResendEmailService(
-            IResend resend, IOptions<ResendOptions> options, EmailTemplateRenderer renderer
-        ) : IEmailService
+                IResend resend, IOptions<ResendOptions> options, ILogger<ResendEmailService> logger
+            ) : IEmailService
     {
         private readonly IResend _resend = resend;
+        private readonly ILogger<ResendEmailService> _logger = logger;
         private readonly ResendOptions _options = options.Value;
-        private readonly EmailTemplateRenderer _renderer = renderer;
 
         public async Task SendEmailContactAsync(string name, string email, string message)
         {
-            var templatePath = Path.Combine(AppContext.BaseDirectory,
-                "Email",
-                "Templates",
-                "ContactEmailTemplate.html"
-            );
-
-            var template = File.ReadAllText(templatePath);
-
-            var html = _renderer.Render(template, new Dictionary<string, string>
+            try
             {
-                { "Name", name },
-                { "Email", email },
-                { "Message", message.Replace("\n", "<br>") }
-            });
+                var templatePath = Path.Combine(
+                    AppContext.BaseDirectory,
+                    "Email",
+                    "Templates",
+                    "ContactEmailTemplate.html"
+                );
 
-            var response = await _resend.EmailSendAsync(new EmailMessage
-            {
-                From = _options.FromEmail,
-                To = _options.ContactEmail,
-                Subject = "Nuevo mensaje de contacto",
-                HtmlBody = html
-            });
+                var template = File.ReadAllText(templatePath);
 
-            if (!response.Success)
+                var html = EmailTemplateRenderer.Render(template, new Dictionary<string, string>
+                    {
+                        { "Name", name },
+                        { "Email", email },
+                        { "Message", message.Replace("\n", "<br>") }
+                    });
+
+                var response = await _resend.EmailSendAsync(new EmailMessage
+                {
+                    From = _options.FromEmail,
+                    To = _options.ContactEmail,
+                    Subject = "Nuevo mensaje de contacto",
+                    HtmlBody = html
+                });
+
+                if (!response.Success)
+                {
+                    if (_logger.IsEnabled(LogLevel.Warning))
+                    {
+                        _logger.LogWarning("Resend falló al enviar correo para {Email}", email);
+                    }
+
+                    throw new AppException("No se pudo enviar el correo", 500);
+                }
+
+                if (_logger.IsEnabled(LogLevel.Information))
+                {
+                    _logger.LogInformation("Correo enviado correctamente desde {Email}", email);
+                }
+            }
+            catch (AppException)
             {
-                throw new Exception("Error enviando email con el servidor de emails");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                if (_logger.IsEnabled(LogLevel.Error))
+                {
+                    _logger.LogError(ex, "Error inesperado enviando correo desde {Email}", email);
+                }
+
+                throw new AppException("Error interno al enviar el correo", 500);
             }
         }
     }

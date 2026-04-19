@@ -1,12 +1,7 @@
 ﻿namespace Cesardd.Shared.Exceptions
 {
-    public class AppException : Exception
+    public class AppException(string message, int statusCode = 400) : Exception(message)
     {
-        public int StatusCode { get; }
-
-        public AppException(string message, int statusCode = 400) : base(message)
-        {
-            StatusCode = statusCode;
-        }
+        public int StatusCode { get; } = statusCode;
     }
 }

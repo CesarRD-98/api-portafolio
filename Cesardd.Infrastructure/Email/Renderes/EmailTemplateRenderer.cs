@@ -2,7 +2,7 @@
 {
     public class EmailTemplateRenderer
     {
-        public string Render(string template, Dictionary<string, string> values)
+        public static string Render(string template, Dictionary<string, string> values)
         {
             foreach (var item in values)
             {

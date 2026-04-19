@@ -1,6 +1,5 @@
 ﻿using Cesardd.Core.Interfaces;
 using Cesardd.Infrastructure.Email;
-using Cesardd.Infrastructure.Email.Renderes;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Resend;
@@ -19,7 +18,6 @@ namespace Cesardd.Infrastructure
             });
             services.Configure<ResendOptions>(configuration.GetSection("Resend"));
             services.AddTransient<IResend, ResendClient>();
-            services.AddSingleton<EmailTemplateRenderer>();
             services.AddScoped<IEmailService, ResendEmailService>();
 
             return services;

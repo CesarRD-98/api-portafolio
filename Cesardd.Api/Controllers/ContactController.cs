@@ -1,11 +1,13 @@
 ﻿using Cesardd.Core.Features.Contact.SendContact;
 using Cesardd.Shared.Results;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace Cesardd.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [EnableRateLimiting("ContactPolicy")]
     public class ContactController(SendContactHandler handler) : ControllerBase
     {
         private readonly SendContactHandler _handler = handler;
