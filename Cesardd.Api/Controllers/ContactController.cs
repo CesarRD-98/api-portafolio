@@ -7,7 +7,7 @@ namespace Cesardd.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [EnableRateLimiting("ContactPolicy")]
+    [EnableRateLimiting("RateLimiterPolicy")]
     public class ContactController(SendContactHandler handler) : ControllerBase
     {
         private readonly SendContactHandler _handler = handler;
