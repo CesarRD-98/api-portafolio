@@ -32,16 +32,16 @@ namespace Cesardd.Infrastructure.Email
                     {
                         { "Name", name },
                         { "Email", email },
-                        { "Message", message.Replace("\n", "<br>") }
+                        { "Message", message }
                     });
 
                 var response = await _resend.EmailSendAsync(new EmailMessage
-                {
-                    From = _options.FromEmail,
-                    To = _options.ContactEmail,
-                    Subject = "Nuevo mensaje de contacto",
-                    HtmlBody = html
-                });
+                    {
+                        From = _options.FromEmail,
+                        To = _options.ContactEmail,
+                        Subject = $"Nuevo mensaje de {name}",
+                        HtmlBody = html
+                    });
 
                 if (!response.Success)
                 {

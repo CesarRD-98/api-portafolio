@@ -1,4 +1,6 @@
-﻿namespace Cesardd.Infrastructure.Email.Renderes
+﻿using System.Net;
+
+namespace Cesardd.Infrastructure.Email.Renderes
 {
     public class EmailTemplateRenderer
     {
@@ -6,7 +8,19 @@
         {
             foreach (var item in values)
             {
-                template = template.Replace($"{{{{{item.Key}}}}}", item.Value);
+                string safeValue;
+
+                if (item.Key == "Message")
+                {
+                    safeValue = WebUtility.HtmlEncode(item.Value)
+                        .Replace("\n", "<br>");
+                }
+                else
+                {
+                    safeValue = WebUtility.HtmlEncode(item.Value);
+                }
+
+                template = template.Replace($"{{{{{item.Key}}}}}", safeValue);
             }
 
             return template;
