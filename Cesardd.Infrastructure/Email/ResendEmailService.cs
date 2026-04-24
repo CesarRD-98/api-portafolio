@@ -29,19 +29,19 @@ namespace Cesardd.Infrastructure.Email
                 var template = File.ReadAllText(templatePath);
 
                 var html = EmailTemplateRenderer.Render(template, new Dictionary<string, string>
-                    {
-                        { "Name", name },
-                        { "Email", email },
-                        { "Message", message }
-                    });
+                {
+                    { "Name", name },
+                    { "Email", email },
+                    { "Message", message }
+                });
 
                 var response = await _resend.EmailSendAsync(new EmailMessage
-                    {
-                        From = _options.FromEmail,
-                        To = _options.ContactEmail,
-                        Subject = $"Nuevo mensaje de {name}",
-                        HtmlBody = html
-                    });
+                {
+                    From = _options.FromEmail,
+                    To = _options.ContactEmail,
+                    Subject = $"Nuevo mensaje de {name}",
+                    HtmlBody = html
+                });
 
                 if (!response.Success)
                 {
