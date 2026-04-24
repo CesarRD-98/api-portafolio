@@ -34,6 +34,13 @@ namespace Cesardd.Api.Extensions
                     await context.HttpContext.Response.WriteAsJsonAsync(response, token);
                 };
 
+                options.AddFixedWindowLimiter("HealthPolicy", opt =>
+                {
+                    opt.PermitLimit = 10;
+                    opt.Window = TimeSpan.FromSeconds(10);
+                    opt.QueueLimit = 0;
+                });
+
                 options.AddFixedWindowLimiter("RateLimiterPolicy", opt =>
                 {
                     opt.PermitLimit = 5;
