@@ -39,7 +39,7 @@ namespace Cesardd.Infrastructure.Email
                 {
                     From = _options.FromEmail,
                     To = _options.ContactEmail,
-                    Subject = $"Nuevo mensaje de {name}",
+                    Subject = $"César, tienes un nuevo mensaje de contacto",
                     HtmlBody = html
                 });
 
