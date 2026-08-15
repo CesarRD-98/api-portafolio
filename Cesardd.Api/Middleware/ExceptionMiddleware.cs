@@ -4,9 +4,10 @@ using System.Net;
 
 namespace Cesardd.Api.Middleware
 {
-    public class ExceptionMiddleware(RequestDelegate next)
+    public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
     {
         private readonly RequestDelegate _next = next;
+        private readonly ILogger<ExceptionMiddleware> _logger = logger;
 
         public async Task Invoke(HttpContext context)
         {
@@ -16,18 +17,31 @@ namespace Cesardd.Api.Middleware
             }
             catch (AppException ex)
             {
-                context.Response.StatusCode = ex.StatusCode;
-                var response = ApiResponse<object>.Fail(ex.Message);
+                _logger.LogWarning(ex, "Error controlado al procesar {Method} {Path}",
+                    context.Request.Method, context.Request.Path);
 
-                await context.Response.WriteAsJsonAsync(response);
+                await WriteErrorResponse(context, ex.StatusCode, ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                var response = ApiResponse<object>.Fail("Error interno en el servidor");
+                _logger.LogError(ex, "Error no controlado al procesar {Method} {Path}",
+                    context.Request.Method, context.Request.Path);
 
-                await context.Response.WriteAsJsonAsync(response);
+                await WriteErrorResponse(context, (int)HttpStatusCode.InternalServerError,
+                    "Error interno en el servidor");
             }
+        }
+
+        private static async Task WriteErrorResponse(HttpContext context, int statusCode, string message)
+        {
+            if (context.Response.HasStarted)
+            {
+                return;
+            }
+
+            context.Response.Clear();
+            context.Response.StatusCode = statusCode;
+            await context.Response.WriteAsJsonAsync(ApiResponse<object>.Fail(message));
         }
     }
 }

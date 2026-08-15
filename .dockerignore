@@ -1,0 +1,22 @@
+# Control de versiones y configuraciones locales
+.git
+.github
+.vs
+.idea
+.vscode
+
+# Resultados de compilación
+**/bin
+**/obj
+
+# Secretos y archivos locales
+**/appsettings.Development.json
+secrets.json
+*.user
+*.suo
+
+# Artefactos no necesarios en la imagen
+*.log
+*.cache
+*.tmp
+README*

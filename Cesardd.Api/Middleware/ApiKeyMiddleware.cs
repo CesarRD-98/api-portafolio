@@ -29,11 +29,8 @@
 
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
 
-                await context.Response.WriteAsJsonAsync(new
-                {
-                    success = false,
-                    error = new { message = "Unauthorized" }
-                });
+                await context.Response.WriteAsJsonAsync(
+                    Cesardd.Shared.Results.ApiResponse<object>.Fail("Unauthorized"));
 
                 return;
             }
